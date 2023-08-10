@@ -13,7 +13,7 @@ function userEmailAndPasswordValidationCheck(email, password) {
     }
 }
 
-exports.signUp = async function (email, userName, password) {
+exports.signUp = async (email, userName, password) => {
     try {
         userEmailAndPasswordValidationCheck(email, password);
         return await Model.User.create({email: email, userName: userName, password: password});
@@ -22,7 +22,7 @@ exports.signUp = async function (email, userName, password) {
     }
 }
 
-exports.signIn = async function (email, password) {
+exports.signIn = async (email, password) => {
     try {
         userEmailAndPasswordValidationCheck(email, password);
         const user = await Model.User.findOne({ where:{ email: email }});
@@ -34,7 +34,7 @@ exports.signIn = async function (email, password) {
     }
 }
 
-exports.signOut = async function (email, password) {
+exports.signOut = async (email, password) => {
     try {
         userEmailAndPasswordValidationCheck(email, password);
         return await Model.User.signOut(email);
