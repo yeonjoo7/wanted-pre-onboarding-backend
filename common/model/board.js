@@ -1,11 +1,11 @@
 "use strict";
 
-const { DataTypes, Model, Deferrable} = require('sequelize');
-const ModelManager = require('./index');
+const { DataTypes, Model } = require('sequelize');
+const ModelManager = require('./modelManager');
 
 const boardAttributes = {
     id: {type: DataTypes.BIGINT, autoIncrement: true, primaryKey:true},
-    userId: {type: DataTypes.BIGINT, references: {model: 'Users', key: 'id', deferrable: Deferrable.INITIALLY_DEFERRED()}},
+    userId: {type: DataTypes.BIGINT, references: {model: 'Users', key: 'id'}},
     post: {type: DataTypes.STRING, allowNull: false},
     password: {type: DataTypes.STRING, allowNull: true},
     isPrivate: {type: DataTypes.BOOLEAN, defaultValue: false}

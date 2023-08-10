@@ -18,8 +18,19 @@ services:
       - db
     ports:
       - "8000:3000"
-    restart: on-failure
-    build: ./app
-    hostname: app
-    links:
-      - db:mysql
+    restart: always
+    build: .
+    environment:
+      SERVICE_NAME: 'pre_onboarding_backend'
+      NODE_ENV: 'development'
+      PORT: 3000
+      MYSQL_OPTIONS_HOST: db
+      MYSQL_DATABASE: wanted_pre_onboarding
+      MYSQL_USERNAME: backend
+      MYSQL_PASSWORD: 2308
+      MYSQL_OPTIONS_DIALECT: 'mysql'
+      MYSQL_OPTIONS_POOL_MAX: 5
+      MYSQL_OPTIONS_POOL_MIN: 0
+      MYSQL_OPTIONS_POOL_IDLE: 10000
+      MYSQL_OPTIONS_LOGGING: 0
+      JWT_SECRET_KEY: 'good_to_go'

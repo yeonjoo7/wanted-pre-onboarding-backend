@@ -1,15 +1,16 @@
 "use strict";
 
 const { DataTypes, Model } = require('sequelize');
-const ModelManager = require('./index');
+const crypto = require('crypto');
+const ModelManager = require('./modelManager');
 const { InvalidPasswordError } = require('../modules/customErrors');
 
 const userAttributes = {
     id: {type: DataTypes.BIGINT, autoIncrement: true, primaryKey:true},
-    userName: {type: DataTypes.STRING, allowNull: false, unique: true},
-    email: {type: DataTypes.STRING, allowNull: false, unique: true},
+    userName: {type: DataTypes.STRING, allowNull: false},
+    email: {type: DataTypes.STRING, allowNull: false},
     password: {type: DataTypes.STRING, allowNull: false},
-    salt: {type: DataTypes.STRING, allowNull: false},
+    salt: {type: DataTypes.STRING},
     lastLogin: {type: DataTypes.DATE, defaultValue: DataTypes.NOW},
     status: {type: DataTypes.STRING(10), allowNull:false, defaultValue:'ALIVE'}
 };
@@ -22,6 +23,10 @@ class UserModel extends Model {
             indexes: [
                 {
                     fields: ['email'],
+                    unique: true
+                },
+                {
+                    fields: ['userName'],
                     unique: true
                 }
             ]});
@@ -39,7 +44,8 @@ class UserModel extends Model {
             password: userData.password,
             lastLogin: userData.lastLogin,
         };
-        return UserModel.build(userForm)
+        const newUser = await UserModel.build(userForm);
+        return await newUser.save();
     }
 
     static encryptPassword(password, salt){
@@ -52,7 +58,13 @@ class UserModel extends Model {
     }
 
     validatePassword(passwordInput) {
-        return UserModel.encryptPassword(passwordInput, this.salt) === this.password
+        return UserModel.encryptPassword(passwordInput, this.salt) === this.password;
+    }
+
+    static async signOut(email){
+        const user = await UserModel.findOne({ where: {email: email}});
+        user.status = 'SIGNOUT';
+        return await user.save();
     }
 
     async updatePassword(password, newPassword) {

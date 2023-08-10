@@ -5,8 +5,7 @@ const { DataTypes, Model } = require('sequelize');
 const logAttributes = {
     id: {type: DataTypes.BIGINT, autoIncrement: true, primaryKey:true},
     type: {type: DataTypes.STRING, allowNull: false},
-    errorStack: {type: DataTypes.STRING, allowNull: true},
-    serverIp: {type: DataTypes.STRING, allowNull: true},
+    errStack: {type: DataTypes.TEXT, allowNull: true},
     userId: {type: DataTypes.BIGINT, allowNull: true}
 };
 
@@ -21,11 +20,11 @@ class LogModel extends Model {
     static async makeNew(logData){
         let logForm = {
             type: logData.type,
-            errorStack: logData.errorStack,
-            serverIp: logData.serverIp,
+            errStack: String(logData.errorStack),
             userId: logData.userId
         };
-        return LogModel.build(logForm);
+        const log = await LogModel.build(logForm)
+        return await log.save();
     }
 }
 

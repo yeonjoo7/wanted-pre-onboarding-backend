@@ -1,6 +1,6 @@
 "use strict";
 
-exports.CustomError = class CustomError extends Error {
+class CustomError extends Error {
     constructor (lastError) {
         super();
         if(lastError) {
@@ -10,6 +10,7 @@ exports.CustomError = class CustomError extends Error {
         }
     }
 }
+exports.CustomError = CustomError;
 
 exports.DatabaseError = class DatabaseError extends CustomError {
     constructor(lastError) {
