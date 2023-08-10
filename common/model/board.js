@@ -6,9 +6,10 @@ const ModelManager = require('./modelManager');
 const boardAttributes = {
     id: {type: DataTypes.BIGINT, autoIncrement: true, primaryKey:true},
     userId: {type: DataTypes.BIGINT, references: {model: 'Users', key: 'id'}},
-    post: {type: DataTypes.STRING, allowNull: false},
+    content: {type: DataTypes.STRING, allowNull: false},
     password: {type: DataTypes.STRING, allowNull: true},
-    isPrivate: {type: DataTypes.BOOLEAN, defaultValue: false}
+    isPrivate: {type: DataTypes.BOOLEAN, defaultValue: false},
+    isDeleted: {type: DataTypes.BOOLEAN, defaultValue: false}
 };
 
 class BoardModel extends Model {
@@ -28,7 +29,7 @@ class BoardModel extends Model {
     static async makeNew(postData){
         let postForm = {
             userId: postData.userId,
-            post: postData.post,
+            content: postData.content,
             password: postData.password,
             isPrivate: postData.isPrivate,
         };

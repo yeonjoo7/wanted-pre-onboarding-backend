@@ -49,3 +49,17 @@ exports.UserNotFoundError = class UserNotFoundError extends CustomError {
         this.code = 'USER_NOT_FOUND';
     }
 }
+
+exports.PostNotFoundError = class PostNotFoundError extends CustomError {
+    constructor(lastError) {
+        super(lastError);
+        this.code = 'POST_NOT_FOUND';
+    }
+}
+
+exports.NoAuthorizationError = class NoAuthorizationError extends CustomError {
+    constructor(lastError) {
+        super(lastError);
+        this.code = 'NO_AUTHORIZATION';
+    }
+}
