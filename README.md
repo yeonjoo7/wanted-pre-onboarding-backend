@@ -22,8 +22,9 @@
 
     
 - 데이터베이스 테이블 구조
+  <img width="681" alt="DB_diagram" src="https://github.com/yeonjoo7/wanted-pre-onboarding-backend/assets/75323528/f50498cf-74bc-4422-ab53-4d0b81b1e89e">  
+  - [dbdiagram.io 링크](https://dbdiagram.io/d/64d60c8902bd1c4a5ea013ed)
 
-<iframe width="560" height="315" src='https://dbdiagram.io/embed/64d60c8902bd1c4a5ea013ed'> </iframe>
 
 - 구현한 API의 동작을 촬영한 데모 영상 링크
   ![ezgif com-video-to-gif](https://github.com/yeonjoo7/wanted-pre-onboarding-backend/assets/75323528/1cac8b9e-38d7-4c09-8adb-bf80407916ab)
