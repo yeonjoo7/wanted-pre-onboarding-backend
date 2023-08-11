@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./app_data:/usr/src/app/
+      - ./:/usr/src/app/
     ports:
       - "8000:3000"
     restart: always

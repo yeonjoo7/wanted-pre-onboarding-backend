@@ -30,13 +30,14 @@ exports.errorHandler = async (result, req, res, next) => {
             if(result.code.startsWith('SERVER')) {
                 await Model.Log.makeNew(errorContent);
                 returnForm.code = 'SERVER_ERROR';
+                return await res.status(500).json(returnForm);
             }
             return await res.status(400).json(returnForm);
         }
 
         if(!errorContent.type) errorContent.type = 'UNKNOWN_ERROR';
         await Model.Log.makeNew(errorContent);
-        return await res.status(400).json({
+        return await res.status(500).json({
             status: "fail",
             code: "UNKNOWN_ERROR",
             message: (result.name) ? result.name : "UnknownError",
@@ -54,7 +55,7 @@ exports.authHandler = async (req, res, next) => {
             if (err) throw new InvalidPasswordError();
             return decoded.data;
         });
-        const user = await Model.User.findOne({ where: {id: userId}});
+        const user = await Model.User.findOne({ where: {id: userId} });
         if(user.status !== 'ALIVE') {
             throw new UserNotFoundError;
         }

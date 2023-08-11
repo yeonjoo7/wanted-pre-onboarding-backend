@@ -4,9 +4,9 @@ const swaggereJsdoc = require('swagger-jsdoc');
 const options = {
     swaggerDefinition: {
         info: {
-            title: 'Test API',
+            title: 'Wanted pre_onboarding-backend-selection-assignment API',
             version: '1.0.0',
-            description: 'Test API with express',
+            description: 'Test API',
         },
         host: 'localhost:3000',
         basePath: '/'

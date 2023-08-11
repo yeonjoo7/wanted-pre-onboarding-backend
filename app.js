@@ -6,7 +6,7 @@ const createError = require('http-errors');
 const { errorHandler } = require('./controllers/middleware');
 const userRoute = require('./routes/userRoute');
 const boardRoute = require('./routes/boardRoute');
-const { swaggerUi, specs } = require('./common/modules/swagger');
+const { swaggerUi, specs } = require('./common/swagger');
 
 const app = express();
 
