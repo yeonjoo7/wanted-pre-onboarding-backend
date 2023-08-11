@@ -1,12 +1,12 @@
 "use strict";
 
 const Model = require('../common/model/modelManager');
-const {NoAuthorizationError} = require("../common/modules/customErrors");
+const {NoAuthorizationError, InvalidPasswordError} = require("../common/modules/customErrors");
 
 
-exports.addPost = async (userId, content, password, isPrivate) => {
+exports.addPost = async (userId, title, content, password, isPrivate) => {
     try {
-        await Model.Board.create({userId, content: content, password, isPrivate});
+        await Model.Board.create({userId, title, content, password, isPrivate});
     } catch (e) {
         throw e;
     }
@@ -30,11 +30,13 @@ exports.findOnePost = async (postId) => {
     }
 }
 
-exports.editPost = async (userId, postId, content, password) => {
+exports.editPost = async (userId, postId, title, content, password) => {
     try {
         const post = await Model.Board.findOne({ where: {id: postId} });
-        if(post.userId !== userId || post.password !== password) throw new NoAuthorizationError;
-        post.content = content;
+        if(post.userId !== userId) throw new NoAuthorizationError;
+        if(!!post.isPrivate && post.password !== password) throw new InvalidPasswordError;
+        if(!!title && post.title !== title) post.title = title;
+        if(!!content && post.content !== content) post.content = content;
         return await post.save();
     } catch (e) {
         throw e;
