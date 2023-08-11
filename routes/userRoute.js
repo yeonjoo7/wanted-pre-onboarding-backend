@@ -14,19 +14,19 @@ const userController = require('../controllers/userController');
  *      produces:
  *      - application/json
  *      parameters:
- *        - in: requestBody
+ *        - in: formData
  *          name: email
  *          required: true
  *          schema:
  *            type: string
  *          description: \'\@\'를 포함한 이메일 주소
- *        - in: requestBody
+ *        - in: formData
  *          name: userName
  *          required: true
  *          schema:
  *            type: string
  *          description: 유저 닉네임
- *        - in: requestBody
+ *        - in: formData
  *          name: password
  *          required: true
  *          schema:
@@ -58,13 +58,13 @@ router.post('/signUp', async function (req, res, next) {
  *      produces:
  *      - application/json
  *      parameters:
- *        - in: requestBody
+ *        - in: formData
  *          name: email
  *          required: true
  *          schema:
  *            type: string
  *          description: 가입한 이메일 주소
- *        - in: requestBody
+ *        - in: formData
  *          name: password
  *          required: true
  *          schema:
@@ -96,13 +96,13 @@ router.post('/signIn', async function (req, res, next) {
  *      produces:
  *      - application/json
  *      parameters:
- *        - in: requestBody
+ *        - in: formData
  *          name: email
  *          required: true
  *          schema:
  *            type: string
  *          description: 가입한 이메일 주소
- *        - in: requestBody
+ *        - in: formData
  *          name: password
  *          required: true
  *          schema:
