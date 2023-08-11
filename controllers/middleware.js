@@ -52,7 +52,7 @@ exports.authHandler = async (req, res, next) => {
             return res.status(403).send({status: "fail", message: "Token is missing."});
         }
         const userId = jwt.verify(token, process.env.JWT_SECRET_KEY, {},function(err, decoded) {
-            if (err) throw new InvalidPasswordError();
+            if (err) throw new InvalidPasswordError;
             return decoded.data;
         });
         const user = await Model.User.findOne({ where: {id: userId} });
