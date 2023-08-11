@@ -5,14 +5,15 @@ const { parameterPresenceCheck } = require('../common/modules');
 const {ParameterError} = require("../common/modules/customErrors");
 
 const checkArray = {
-    createAPost : ['title', 'content', 'password', 'isPrivate'],
+    createAPost : ['title', 'content', 'isPrivate'],
     findAllPosts: ['offset', 'limit'],
 };
 
 exports.addPost = async (req, res, next) => {
     try  {
         const { title, content, password, isPrivate } = req.body;
-        parameterPresenceCheck(checkArray.createAPost, {title, content, password, isPrivate});
+        parameterPresenceCheck(checkArray.createAPost, {title, content, isPrivate});
+        if(JSON.parse(isPrivate) && !password) throw new ParameterError;
         await boardService.addPost(req.userId, title, content, password, JSON.parse(isPrivate));
         return next({status: 'success'});
     } catch (e) {
@@ -23,7 +24,7 @@ exports.addPost = async (req, res, next) => {
 exports.findAllPost = async (req, res, next) => {
     try  {
         const { offset, limit } = req.query;
-        if(parseInt(offset)<0 || parseInt(limit)<0) throw new ParameterError;
+        if(!offset || !limit || parseInt(offset)<0 || parseInt(limit)<0) throw new ParameterError;
         parameterPresenceCheck(checkArray.findAllPosts, {offset, limit});
         const posts = await boardService.findAllPost(parseInt(offset), parseInt(limit));
         return next({status: 'success', posts: posts});
